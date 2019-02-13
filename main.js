@@ -8,7 +8,7 @@ const glob = require('glob');
 
 const debug = /--debug/.test(process.argv[2]);
 
-if (process.mas) app.setName('Stream Translator');
+if (process.mas) app.setName('Electron Pandora');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -27,13 +27,18 @@ function initialize() {
             minWidth: 500,
             minHeight: 840,
             height: 840,
-            title: app.getName()
-        }
+            title: app.getName(),
+            webPreferences: {
+                nodeIntegration: false,
+            }
+        };
 
         mainWindow = new BrowserWindow(windowOptions)
 
         // and load the index.html of the app.
-        mainWindow.loadFile('index.html')
+        //mainWindow.loadFile('index.html');
+        mainWindow.loadURL('https://www.pandora.com/account/sign-in');
+
 
         // Launch fullscreen with DevTools open, usage: npm run debug
         if (debug) {
