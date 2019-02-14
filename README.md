@@ -4,9 +4,10 @@
   <p align="center">A Desktop app for Pandora<p>
 </p>
 
+## Download
 
-
-
+[Download latest release]() (macOS and Linux)
+ 
 
 ## Screenshot
 
