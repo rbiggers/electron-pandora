@@ -19,7 +19,7 @@ To clone and run this repository you'll need [Git](https://git-scm.com) and [Nod
 
 I use [nodemon](https://nodemon.io/) during this development. It is a pretty cool little tool that will speed up your development process.
 
-####From your command line:
+#### From your command line:
 
 ```bash
 # Clone this repository
@@ -41,3 +41,4 @@ npm run dist
 ```
 
 #### License [MIT](LICENSE.md)
+ 
