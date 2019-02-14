@@ -6,7 +6,7 @@
 
 ## Download
 
-[Download latest release]() 
+[Download latest release](https://github.com/rbiggers/electron-pandora/releases) 
  
 ## Screenshot
 
@@ -14,9 +14,9 @@
 
 ## Development
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/). The easiest way to get [Node.js](https://nodejs.org/en/download/) on your computer is to use [NVM](https://github.com/creationix/nvm)
+To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/). The easiest way to get [Node.js](https://nodejs.org/en/download/) on your computer is to use [NVM](https://github.com/creationix/nvm).
 
-I use [nodemon](https://nodemon.io/) during this development. It is a pretty cool little tool that will speed up your development process.
+I used [nodemon](https://nodemon.io/) for this development. It is a pretty cool little tool that will help speed up your development process.
 
 #### From your command line:
 
