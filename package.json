@@ -10,7 +10,12 @@
     "watch:dev": "nodemon --exec 'electron . --debug'",
     "postinstall": "electron-builder install-app-deps",
     "pack": "build --dir",
-    "dist": "build",
+    "dist": "rm -rf dist/ && electron-builder -mlw && npm run zip:all",
+    "zip:all": "mkdir dist/out && npm run zip:win && npm run zip:mac && npm run zip:linux && npm run zip:appimg",
+    "zip:win": "cd dist/ && zip -r -X \"out/Pandora-win-x64.zip\" . -i \"*.exe\"",
+    "zip:mac": "cd dist/ && zip -r -X \"out/Pandora-mac-x64.zip\" . -i \"*.dmg\"",
+    "zip:linux": "cd dist/ && zip -r -X \"out/Pandora-linux-x64.zip\" . -i \"*.deb\"",
+    "zip:appimg": "cd dist/ && zip -r -X \"out/Pandora-app-img-x64.zip\" . -i \"*.AppImage\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "build": {
@@ -18,6 +23,19 @@
     "mac": {
       "category": "public.app-category.music",
       "icon": "assets/icon/icon.icns"
+    },
+    "linux": {
+      "maintainer": "russell.biggers@gmail.com",
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "icon": "assets/icon/icon.ico",
+      "target": [
+        "nsis"
+      ]
     },
     "dmg": {
       "contents": [{
@@ -31,16 +49,6 @@
           "path": "/Applications"
         }
       ]
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ]
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "assets/icon/icon.ico"
     }
   },
   "devDependencies": {

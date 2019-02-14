@@ -8,7 +8,6 @@
 
 [Download latest release]() 
  
-
 ## Screenshot
 
 <img src="assets/screenshot/screenshot.png" width="640">
