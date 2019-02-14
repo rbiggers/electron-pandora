@@ -23,10 +23,8 @@ function initialize() {
     function createWindow() {
         // Create the browser window.
         const windowOptions = {
-            width: 500,
-            minWidth: 500,
-            minHeight: 840,
-            height: 840,
+            width: 1280,
+            height: 720,
             title: app.getName(),
             webPreferences: {
                 nodeIntegration: false,
