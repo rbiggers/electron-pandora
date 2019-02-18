@@ -1,6 +1,7 @@
 const {
     app,
-    BrowserWindow
+    BrowserWindow,
+    globalShortcut
 } = require('electron');
 
 const path = require('path');
@@ -31,19 +32,18 @@ function initialize() {
             }
         };
 
-        mainWindow = new BrowserWindow(windowOptions)
+        mainWindow = new BrowserWindow(windowOptions);
 
         // and load the index.html of the app.
         //mainWindow.loadFile('index.html');
         mainWindow.loadURL('https://www.pandora.com/account/sign-in');
 
-
         // Launch fullscreen with DevTools open, usage: npm run debug
         if (debug) {
-            mainWindow.webContents.openDevTools()
-            mainWindow.maximize()
-            require('devtron').install()
-        }
+            mainWindow.webContents.openDevTools();
+            mainWindow.maximize();
+            require('devtron').install();
+        };
 
         // Emitted when the window is closed.
         mainWindow.on('closed', () => {
@@ -51,14 +51,38 @@ function initialize() {
             // in an array if your app supports multi windows, this is the time
             // when you should delete the corresponding element.
             mainWindow = null
-        })
-    }
+        });
+
+        globalShortcut.register('MediaPlayPause', () => {
+            mainWindow.webContents.sendInputEvent({
+                type: "keyDown",
+                keyCode: "\u0020" // spacebar code
+            });
+            mainWindow.webContents.sendInputEvent({
+                type: "keyUp",
+                keyCode: "\u0020" // spacebar code
+            });
+        });
+
+        globalShortcut.register('MediaNextTrack', () => {
+            console.log('medianexttrack pressed');
+            mainWindow.webContents.sendInputEvent({
+                type: "keyDown",
+                keyCode: "right"
+            });
+            mainWindow.webContents.sendInputEvent({
+                type: "keyUp",
+                keyCode: "right"
+            });
+        });        
+
+    };
 
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
     app.on('ready', () => {
-        createWindow()
+        createWindow();
     });
 
     // Quit when all windows are closed.
@@ -67,17 +91,17 @@ function initialize() {
         // to stay active until the user quits explicitly with Cmd + Q
         if (process.platform !== 'darwin') {
             app.quit();
-        }
-    })
+        };
+    });
 
     app.on('activate', () => {
         // On macOS it's common to re-create a window in the app when the
         // dock icon is clicked and there are no other windows open.
         if (mainWindow === null) {
             createWindow();
-        }
-    })
-}
+        };
+    });
+};
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
@@ -90,7 +114,7 @@ function initialize() {
 // Returns true if the current version of the app should quit instead of
 // launching.
 function makeSingleInstance() {
-    if (process.mas) return
+    if (process.mas) return;
 
     app.requestSingleInstanceLock();
 
@@ -100,16 +124,16 @@ function makeSingleInstance() {
                 mainWindow.restore();
             }
             mainWindow.focus();
-        }
-    })
-}
+        };
+    });
+};
 
 // Require each JS file in the main-process dir
 function loadMainProcess() {
-    const files = glob.sync(path.join(__dirname, 'main-process/**/*.js'))
+    const files = glob.sync(path.join(__dirname, 'main-process/**/*.js'));
     files.forEach((file) => {
-        require(file)
+        require(file);
     });
-}
+};
 
 initialize();
