@@ -65,7 +65,6 @@ function initialize() {
         });
 
         globalShortcut.register('MediaNextTrack', () => {
-            console.log('medianexttrack pressed');
             mainWindow.webContents.sendInputEvent({
                 type: "keyDown",
                 keyCode: "right"
@@ -125,14 +124,6 @@ function makeSingleInstance() {
             }
             mainWindow.focus();
         };
-    });
-};
-
-// Require each JS file in the main-process dir
-function loadMainProcess() {
-    const files = glob.sync(path.join(__dirname, 'main-process/**/*.js'));
-    files.forEach((file) => {
-        require(file);
     });
 };
 
