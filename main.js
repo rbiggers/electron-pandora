@@ -19,8 +19,6 @@ function initialize() {
 
     makeSingleInstance();
 
-    loadMainProcess();
-
     function createWindow() {
         // Create the browser window.
         const windowOptions = {
