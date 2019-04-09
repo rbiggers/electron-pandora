@@ -24,6 +24,7 @@ function initialize() {
         const windowOptions = {
             width: 1280,
             height: 720,
+            frame: false,
             title: app.getName(),
             webPreferences: {
                 nodeIntegration: false,
