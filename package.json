@@ -2,7 +2,7 @@
   "name": "Pandora",
   "version": "0.0.3",
   "description": "Multi-platform desktop version of Pandora Music",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "dev": "electron . --debug",
