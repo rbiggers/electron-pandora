@@ -28,7 +28,8 @@ function initialize() {
         const mainWindowOptions = {
             width: 1280,
             height: 720,
-            frame: false,
+            //frame: false,
+            titleBarStyle: 'hidden',
             title: app.getName(),
             webPreferences: {
                 nodeIntegration: true,
@@ -37,7 +38,7 @@ function initialize() {
 
         mainWindow = new BrowserWindow(mainWindowOptions);
         // and load the index.html of the app.
-        mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
+        mainWindow.loadURL(path.join('file://', __dirname, `./platforms/${process.platform}/index.html`));
 
         // Launch fullscreen with DevTools open, usage: npm run debug
         if (debug) {
@@ -112,7 +113,11 @@ function makeSingleInstance() {
 
 function createBrowserView() {
 
+    let desiredWidth;
+    let desiredHeight;
+
     let mainWindowBounds = mainWindow.getBounds();
+
     console.log('mainWindowBounds: ', mainWindowBounds);
 
     let view = new BrowserView({
@@ -123,11 +128,14 @@ function createBrowserView() {
 
     mainWindow.setBrowserView(view);
 
+    desiredWidth = debug ? Math.round(mainWindowBounds.width / 2) : mainWindowBounds.width;
+    desiredHeight = debug ? Math.round(mainWindowBounds.height / 2) : mainWindowBounds.height - titleBarOffset;
+
     view.setBounds({
         x: 0,
         y: titleBarOffset,
-        width: mainWindowBounds.width,
-        height: mainWindowBounds.height - titleBarOffset
+        width: desiredWidth,
+        height: desiredHeight
     });
 
     view.setAutoResize({
@@ -164,5 +172,9 @@ function registerGlobalShortcuts() {
     });
 
 };
+
+function getPlatform() {
+    
+}
 
 initialize();

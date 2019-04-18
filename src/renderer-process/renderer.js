@@ -3,6 +3,9 @@
 // All of the Node.js APIs are available in this process.
 const remote = require('electron').remote;
 
+const macStyleSheet = './styles/mac.css';
+const win32StyleSheet = './styles/win.css';
+
 (function handleWindowControls() {
     // When document has loaded, initialise
     document.onreadystatechange = () => {
@@ -61,5 +64,29 @@ const remote = require('electron').remote;
                 maxButton.style.display = "flex";
             }
         }
-    }
+
+        //changeStyles();
+    };
+
+    function changeStyles() {
+
+        let styleSheet;
+
+        // process.platform: aix | darwin | freebsd | linux | openbsd | sunos | win32
+
+        switch (process.platform) {
+            case 'darwin':
+                styleSheet = macStyleSheet;
+                break;
+            case 'win32':
+                styleSheet = win32StyleSheet;
+                break;
+            default:
+                break;
+        }
+
+        document.getElementById('currentCSS').href = styleSheet;
+
+    };
+
 })();

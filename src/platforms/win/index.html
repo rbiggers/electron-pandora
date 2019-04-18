@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <title>Hello World!</title>
 
-    <link rel="stylesheet" href="style.css" />
+    <link id="currentCSS" href="styles/mac.css" rel="stylesheet" />
+    
 </head>
 
 <body>
@@ -19,16 +20,19 @@
 
             <div id="window-controls">
                 <div class="button" id="min-button">
-                    <span>&#xE921;</span>
+                    <!-- <span>&#xE921;</span> -->
+                    <span><strong>&ndash;</strong></span>
                 </div>
                 <div class="button" id="max-button">
-                    <span>&#xE922;</span>
+                    <!-- <span>&#xE922;</span> -->
+                    <span><strong>+</strong></span>
                 </div>
                 <div class="button" id="restore-button">
                     <span>&#xE923;</span>
                 </div>
                 <div class="button" id="close-button">
-                    <span>&#xE8BB;</span>
+                    <!-- <span>&#xE8BB;</span> -->
+                    <span><strong>x</strong></span>
                 </div>
 
             </div>
@@ -41,7 +45,7 @@
 
     <script>
         // You can also require other files to run in this process
-        require('./renderer-process/renderer')
+        require('../../renderer-process/renderer')
     </script>
 </body>
 
