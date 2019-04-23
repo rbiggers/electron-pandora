@@ -1,25 +1,13 @@
+* {margin: 0; padding: 0; border: 0; vertical-align: baseline;}
+html {box-sizing: border-box;}
+*, *:before, *:after {box-sizing: inherit;}
 
-
-#titlebar {
-    display: block;
-    position: fixed;
-    height: 32px;
-    width: calc(100% - 2px);
-    background: red;
-  }
-  #titlebar {
-    padding: 4px;
-  }
-  #titlebar #drag-region {
-    width: 100%;
+html, body {
     height: 100%;
+    margin: 0;
+}
+
+body {
+    height: 25px;
     -webkit-app-region: drag;
-    -webkit-user-select: none;
-  }
-  #titlebar {
-    color: #FFF;
-  }
-  #titlebar #drag-region {
-    display: grid;
-    grid-template-columns: auto 138px;
-  }
+}

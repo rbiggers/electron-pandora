@@ -16,6 +16,7 @@ if (process.mas) app.setName('Electron Pandora');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow = null;
+let pandoraView = null;
 
 function initialize() {
 
@@ -29,17 +30,14 @@ function initialize() {
             titleBarStyle: 'hidden',
             title: app.getName(),
             webPreferences: {
-                nodeIntegration: false,
+                nodeIntegration: true,
             }
         };
 
         mainWindow = new BrowserWindow(windowOptions);
 
         // and load the index.html of the app.
-        //mainWindow.loadFile('index.html');
-        //mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
-
-        mainWindow.loadURL(targetUrl);
+        mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
         // Launch fullscreen with DevTools open, usage: npm run debug
         if (debug) {
@@ -142,31 +140,38 @@ function registerGlobalShortcuts() {
 
 function createBrowserView() {
 
-    let mainWindowBounds = mainWindow.getBounds();
-    console.log('mainWindowBounds: ', mainWindowBounds);
+    let desiredWidth;
 
-    let view = new BrowserView({
+    let mainWindowBounds = mainWindow.getBounds();
+
+    pandoraView = new BrowserView({
         webPreferences: {
             nodeIntegration: false
         }
     });
 
-    mainWindow.setBrowserView(view);
+    mainWindow.setBrowserView(pandoraView);
 
-    view.setBounds({
+    desiredWidth = debug ? Math.round(mainWindowBounds.width * 0.7) : mainWindowBounds.width;
+
+    pandoraView.setBounds({
         x: 0,
         y: 0,
-        width: mainWindowBounds.width,
-        height: 25
+        width: desiredWidth,
+        height: mainWindowBounds.height
     });
 
-    view.setAutoResize({
+    pandoraView.setAutoResize({
         width: true,
         height: true
     });
 
-    view.webContents.loadURL(path.join('file://', __dirname, '/index.html'));
+    pandoraView.webContents.loadURL(targetUrl);
+
+    if (debug) pandoraView.webContents.openDevTools({mode: 'right'});
 
 };
+
+
 
 initialize();
