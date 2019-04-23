@@ -1,19 +1,22 @@
 const {
     app,
+    BrowserView,
     BrowserWindow,
     globalShortcut
 } = require('electron');
 
 const path = require('path');
-const glob = require('glob');
 
 const debug = /--debug/.test(process.argv[2]);
+
+const targetUrl = 'https://www.pandora.com/account/sign-in';
 
 if (process.mas) app.setName('Electron Pandora');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow = null;
+let pandoraView = null;
 
 function initialize() {
 
@@ -24,6 +27,7 @@ function initialize() {
         const windowOptions = {
             width: 1280,
             height: 720,
+            titleBarStyle: 'hidden',
             title: app.getName(),
             webPreferences: {
                 nodeIntegration: false,
@@ -33,8 +37,7 @@ function initialize() {
         mainWindow = new BrowserWindow(windowOptions);
 
         // and load the index.html of the app.
-        //mainWindow.loadFile('index.html');
-        mainWindow.loadURL('https://www.pandora.com/account/sign-in');
+        mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
         // Launch fullscreen with DevTools open, usage: npm run debug
         if (debug) {
@@ -51,27 +54,9 @@ function initialize() {
             mainWindow = null
         });
 
-        globalShortcut.register('MediaPlayPause', () => {
-            mainWindow.webContents.sendInputEvent({
-                type: "keyDown",
-                keyCode: "\u0020" // spacebar code
-            });
-            mainWindow.webContents.sendInputEvent({
-                type: "keyUp",
-                keyCode: "\u0020" // spacebar code
-            });
-        });
+        registerGlobalShortcuts();
 
-        globalShortcut.register('MediaNextTrack', () => {
-            mainWindow.webContents.sendInputEvent({
-                type: "keyDown",
-                keyCode: "right"
-            });
-            mainWindow.webContents.sendInputEvent({
-                type: "keyUp",
-                keyCode: "right"
-            });
-        });        
+        createBrowserView();
 
     };
 
@@ -98,7 +83,9 @@ function initialize() {
             createWindow();
         };
     });
+
 };
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
@@ -123,6 +110,67 @@ function makeSingleInstance() {
             mainWindow.focus();
         };
     });
+};
+
+function registerGlobalShortcuts() {
+
+    globalShortcut.register('MediaPlayPause', () => {
+        mainWindow.webContents.sendInputEvent({
+            type: "keyDown",
+            keyCode: "\u0020" // spacebar code
+        });
+        mainWindow.webContents.sendInputEvent({
+            type: "keyUp",
+            keyCode: "\u0020" // spacebar code
+        });
+    });
+
+    globalShortcut.register('MediaNextTrack', () => {
+        mainWindow.webContents.sendInputEvent({
+            type: "keyDown",
+            keyCode: "right"
+        });
+        mainWindow.webContents.sendInputEvent({
+            type: "keyUp",
+            keyCode: "right"
+        });
+    });
+
+};
+
+function createBrowserView() {
+
+    let desiredWidth;
+
+    let mainWindowBounds = mainWindow.getBounds();
+
+    pandoraView = new BrowserView({
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true
+        }
+    });
+
+    mainWindow.setBrowserView(pandoraView);
+
+    desiredWidth = debug ? Math.round(mainWindowBounds.width * 0.7) : mainWindowBounds.width;
+
+    pandoraView.setBounds({
+        x: 0,
+        y: 0,
+        width: desiredWidth,
+        height: mainWindowBounds.height
+    });
+
+    pandoraView.setAutoResize({
+        width: true,
+        height: true
+    });
+
+    pandoraView.webContents.loadURL(targetUrl);
+
+    if (debug) pandoraView.webContents.openDevTools({mode: 'right'});
+
 };
 
 initialize();
