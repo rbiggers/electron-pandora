@@ -172,6 +172,4 @@ function createBrowserView() {
 
 };
 
-
-
 initialize();
