@@ -4,6 +4,8 @@
   <p align="center">A Desktop app for Pandora<p>
 </p>
 
+[![license](https://img.shields.io/github/license/rbiggers/electron-pandora.svg)](https://mit-license.org/)
+
 ## Download
 
 [Download latest release](https://github.com/rbiggers/electron-pandora/releases) 
@@ -28,13 +30,13 @@ cd electron-pandora
 # Install dependencies
 npm install
 # Run the app
-npm start
+npm run start
 # Run the app in debug mode
-npm dev
+npm run dev
 # Run the app with nodemon
-npm watch
+npm run watch
 # Run the app with nodemon in debug mode
-npm watch:dev
+npm run watch:dev
 # Build the app
 npm run dist
 ```
