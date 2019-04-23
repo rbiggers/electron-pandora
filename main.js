@@ -30,7 +30,7 @@ function initialize() {
             titleBarStyle: 'hidden',
             title: app.getName(),
             webPreferences: {
-                nodeIntegration: true,
+                nodeIntegration: false,
             }
         };
 
@@ -146,7 +146,8 @@ function createBrowserView() {
 
     pandoraView = new BrowserView({
         webPreferences: {
-            nodeIntegration: false
+            nodeIntegration: false,
+            contextIsolation: true
         }
     });
 
