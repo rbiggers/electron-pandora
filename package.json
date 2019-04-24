@@ -16,7 +16,7 @@
     "zip:mac": "cd dist/ && zip -r -X \"bin/Pandora-mac-x64.zip\" . -i \"*.dmg\"",
     "zip:linux": "cd dist/ && zip -r -X \"bin/Pandora-linux-x64.zip\" . -i \"*.deb\"",
     "zip:appimg": "cd dist/ && zip -r -X \"bin/Pandora-app-img-x64.zip\" . -i \"*.AppImage\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha *spec.js"
   },
   "build": {
     "appId": "org.rbiggers.pandora",
@@ -62,7 +62,8 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
-    "glob": "^7.1.3"
+    "glob": "^7.1.3",
+    "mocha": "6.1.4"
   },
   "repository": {
     "type": "git",
