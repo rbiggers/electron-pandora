@@ -38,7 +38,8 @@
       ]
     },
     "dmg": {
-      "contents": [{
+      "contents": [
+        {
           "x": 110,
           "y": 150
         },
@@ -54,8 +55,11 @@
   "devDependencies": {
     "devtron": "^1.4.0",
     "electron": "^4.0.4",
-    "nodemon": "^1.18.10",
-    "electron-builder": "^20.38.5"
+    "electron-builder": "20.40.2",
+    "eslint": "5.16.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.17.2",
+    "nodemon": "^1.18.10"
   },
   "dependencies": {
     "glob": "^7.1.3"
