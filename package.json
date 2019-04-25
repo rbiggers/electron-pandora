@@ -1,6 +1,6 @@
 {
   "name": "Pandora",
-  "version": "0.1.3",
+  "version": "v0.1.2",
   "description": "Multi-platform desktop version of Pandora Music",
   "main": "main.js",
   "scripts": {
@@ -53,8 +53,6 @@
     }
   },
   "devDependencies": {
-    "devtron": "^1.4.0",
-    "electron": "^4.0.4",
     "electron-builder": "20.40.2",
     "eslint": "5.16.0",
     "eslint-config-airbnb-base": "13.1.0",
@@ -62,8 +60,11 @@
     "nodemon": "^1.18.10"
   },
   "dependencies": {
+    "devtron": "^1.4.0",
+    "electron": "^4.0.4",
     "glob": "^7.1.3",
-    "mocha": "6.1.4"
+    "mocha": "6.1.4",
+    "request-promise": "4.2.4"
   },
   "repository": {
     "type": "git",
