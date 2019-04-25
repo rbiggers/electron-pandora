@@ -1,6 +1,6 @@
 {
   "name": "Pandora",
-  "version": "v0.1.2",
+  "version": "v0.1.4",
   "description": "Multi-platform desktop version of Pandora Music",
   "main": "main.js",
   "scripts": {
@@ -12,11 +12,11 @@
     "pack": "build --dir",
     "dist": "rm -rf dist/ && electron-builder -mlw && npm run zip:all",
     "zip:all": "mkdir dist/bin && npm run zip:win && npm run zip:mac && npm run zip:linux && npm run zip:appimg",
-    "zip:win": "cd dist/ && zip -r -X \"bin/Pandora-win-x64.zip\" . -x \"win-unpacked/*\" -i \"*.exe\"",
-    "zip:mac": "cd dist/ && zip -r -X \"bin/Pandora-mac-x64.zip\" . -i \"*.dmg\"",
-    "zip:linux": "cd dist/ && zip -r -X \"bin/Pandora-linux-x64.zip\" . -i \"*.deb\"",
-    "zip:appimg": "cd dist/ && zip -r -X \"bin/Pandora-app-img-x64.zip\" . -i \"*.AppImage\"",
-    "test": "mocha *spec.js"
+    "zip:win": "cd dist/ && zip -r -X \"bin/Pandora-win32.zip\" . -x \"win-unpacked/*\" -i \"*.exe\"",
+    "zip:mac": "cd dist/ && zip -r -X \"bin/Pandora-darwin.zip\" . -i \"*.dmg\"",
+    "zip:linux": "cd dist/ && zip -r -X \"bin/Pandora-linux.zip\" . -i \"*.deb\"",
+    "zip:appimg": "cd dist/ && zip -r -X \"bin/Pandora-app-img.zip\" . -i \"*.AppImage\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "build": {
     "appId": "org.rbiggers.pandora",
