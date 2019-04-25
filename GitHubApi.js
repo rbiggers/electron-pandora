@@ -1,5 +1,6 @@
 
 const request = require('request-promise');
+const { download } = require('electron-dl');
 
 const GitHubApi = () => {
   const options = {
@@ -10,34 +11,45 @@ const GitHubApi = () => {
     resolveWithFullResponse: true,
   };
 
-  const doRequest = () => new Promise((resolve, reject) => {
-    request(options)
-      .then(response => resolve(response))
-      .catch(error => reject(error));
-  });
-
-  const getLatestRelease = () => new Promise((resolve, reject) => {
+  const getLatestRelease = async () => {
     options.method = 'GET';
 
-    doRequest(options)
-      .then((response) => { resolve(response); })
-      .catch((error) => { reject(error); });
-  });
+    try {
+      return await request(options);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
-  const getLatestVersion = () => new Promise((resolve, reject) => {
+  const getLatestVersion = async () => {
     options.method = 'GET';
 
-    doRequest(options)
-      .then((response) => {
-        const version = JSON.parse(response.body).name;
-        resolve(version);
-      })
-      .catch((error) => { reject(error); });
-  });
+    try {
+      const response = await request(options);
+      const version = JSON.parse(response.body).name;
+      return version;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
+  const downloadLatestVersion = async (window, url) => {
+    const downloadOptions = {
+      openFolderWhenDone: true,
+      showBadge: true,
+    };
+
+    try {
+      return await download(window, url, downloadOptions);
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
 
   return {
     getLatestRelease,
     getLatestVersion,
+    downloadLatestVersion,
   };
 };
 

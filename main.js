@@ -2,6 +2,7 @@ const {
   app,
   Menu,
   shell,
+  dialog,
   BrowserView,
   BrowserWindow,
   globalShortcut,
@@ -47,6 +48,52 @@ function makeSingleInstance() {
       mainWindow.focus();
     }
   });
+}
+
+function showDownlodDialog(window, url) {
+  if (!(window) || !(url)) {
+    console.error('Window: ', window);
+    console.error('Url: ', url);
+    return;
+  }
+
+  setTimeout(() => {
+    const dialogOptions = {
+      type: 'question',
+      buttons: ['Download', 'Cancel'],
+      icon: 'assets/icon/icon.png',
+      title: 'Update',
+      message: 'An update is available, would you like to download it?',
+    };
+
+    dialog.showMessageBox(dialogOptions, (i) => {
+      if (i === 0) {
+        GitHubApi.downloadLatestVersion(window, url)
+          .then(result => console.log('Done!: \n', result))
+          .catch(error => console.error(error));
+      }
+    });
+  }, 3000);
+}
+
+function checkForUpdates() {
+  GitHubApi.getLatestVersion()
+    .then((githubVersion) => {
+      if (!(version === githubVersion)) {
+        GitHubApi.getLatestRelease()
+          .then((response) => {
+            const body = JSON.parse(response.body);
+            body.assets.forEach((asset) => {
+              if (asset.browser_download_url.includes(process.platform)) {
+                // Show dialog
+                showDownlodDialog(mainWindow, asset.browser_download_url);
+              }
+            });
+          })
+          .catch(error => console.error('Error: ', error));
+      }
+    })
+    .catch(error => console.error('Error: ', error));
 }
 
 function registerGlobalShortcuts() {
@@ -158,6 +205,10 @@ function createDefaultMenu() {
           label: 'Search Issues',
           click() { shell.openExternal('https://github.com/rbiggers/electron-pandora/issues'); },
         },
+        {
+          label: 'Check for Updates',
+          click() { checkForUpdates(); },
+        },
       ],
     },
   ];
@@ -202,34 +253,6 @@ function createDefaultMenu() {
 
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
-}
-
-function checkForUpdates() {
-  GitHubApi.getLatestVersion()
-    .then((githubVersion) => {
-      console.log('githubVersion:', githubVersion);
-      console.log('Version:', version);
-      if (!(version === githubVersion)) {
-        console.log('Versions dont Match');
-
-        // Ask to download update
-        // we will skip that for now
-
-        GitHubApi.getLatestRelease()
-          .then((response) => {
-            const body = JSON.parse(response.body);
-            body.assets.forEach((asset) => {
-              console.log(asset);
-
-              if (asset.browser_download_url.includes(process.platform)) {
-                console.log(asset.browser_download_url);
-              }
-            });
-          })
-          .catch(error => console.log('Error: ', error));
-      }
-    })
-    .catch(error => console.log('Error: ', error));
 }
 
 function initialize() {
