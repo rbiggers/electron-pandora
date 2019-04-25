@@ -1,6 +1,6 @@
 {
   "name": "Pandora",
-  "version": "v0.1.4",
+  "version": "v0.2.0",
   "description": "Multi-platform desktop version of Pandora Music",
   "main": "main.js",
   "scripts": {
