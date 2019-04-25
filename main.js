@@ -61,7 +61,7 @@ function showDownlodDialog(window, url) {
     const dialogOptions = {
       type: 'question',
       buttons: ['Download', 'Cancel'],
-      icon: 'assets/icon/icon.png',
+      icon: path.join(__dirname, 'assets/icon/icon.png'),
       title: 'Update',
       message: 'An update is available, would you like to download it?',
     };
