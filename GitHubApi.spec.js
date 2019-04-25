@@ -4,23 +4,21 @@ const GitHubApi = require('./GitHubApi');
 
 describe('GitHubApi', () => {
   describe('Request Github for latest release', () => {
-    it('Should return status code 200 OK', () => new Promise((resolve, reject) => {
+    it('Should return status code 200 OK', () => {
       GitHubApi.getLatestRelease()
         .then((response) => {
           assert.equal(200, response.statusCode);
-          resolve();
         })
-        .catch(error => reject(error));
-    }));
+        .catch(error => console.error(error));
+    });
   });
   describe('Request Github for latest version number', () => {
-    it('Should return the latest version number', () => new Promise((resolve, reject) => {
+    it('Should return the latest version number', () => {
       GitHubApi.getLatestVersion()
-        .then((response) => {
-          assert.equal('v0.1.3', response);
-          resolve();
+        .then((result) => {
+          assert.equal('v0.1.4', result);
         })
-        .catch(error => reject(error));
-    }));
+        .catch(error => console.error(error));
+    });
   });
 });
