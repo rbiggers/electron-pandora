@@ -10,6 +10,7 @@ const {
 
 const path = require('path');
 const devtron = require('devtron');
+const windowStateKeeper = require('electron-window-state');
 const { version } = require('./package.json');
 const GitHubApi = require('./GitHubApi');
 
@@ -22,6 +23,7 @@ if (process.mas) app.setName('Electron Pandora');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow = null;
+let mainWindowState = null;
 let pandoraView = null;
 
 // In this file you can include the rest of your app's specific main process
@@ -259,10 +261,17 @@ function initialize() {
   makeSingleInstance();
 
   function createWindow() {
-    // Create the browser window.
+    // Create the browser window with state.
+    mainWindowState = windowStateKeeper({
+      defaultWidth: 1280,
+      defaultHeight: 720,
+    });
+
     const windowOptions = {
-      width: 1280,
-      height: 720,
+      x: mainWindowState.x,
+      y: mainWindowState.y,
+      width: mainWindowState.width,
+      height: mainWindowState.height,
       titleBarStyle: 'hidden',
       title: app.getName(),
       webPreferences: {
@@ -271,6 +280,8 @@ function initialize() {
     };
 
     mainWindow = new BrowserWindow(windowOptions);
+
+    mainWindowState.manage(mainWindow);
 
     // and load the index.html of the app.
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
