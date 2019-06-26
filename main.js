@@ -11,12 +11,20 @@ const {
 const path = require('path');
 const devtron = require('devtron');
 const windowStateKeeper = require('electron-window-state');
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+
 const { version } = require('./package.json');
 const GitHubApi = require('./GitHubApi');
+
 
 const debug = /--debug/.test(process.argv[2]);
 
 const targetUrl = 'https://www.pandora.com/account/sign-in';
+// const webScrobblerPath = 'extensions/hhinaapppaileiechjoiifaancjggfjm/2.20.3_0';
+// const webScrobblerPath = '/Users/h219372/Library/Application Support/Google/Chrome/Default/Extensions/hhinaapppaileiechjoiifaancjggfjm/2.20.3_0';
+// const webScrobblerPath = '/Users/h219372/Library/Application Support/Google/Chrome/Default/Extensions/hhinaapppaileiechjoiifaancjggfjm/2.20.3_0';
+
+const webScrobblerPath = 'extensions/hhinaapppaileiechjoiifaancjggfjm/2.20.3_0';
 
 if (process.mas) app.setName('Electron Pandora');
 
@@ -272,19 +280,26 @@ function initialize() {
       y: mainWindowState.y,
       width: mainWindowState.width,
       height: mainWindowState.height,
-      titleBarStyle: 'hidden',
+      // titleBarStyle: 'hidden',
       title: app.getName(),
       webPreferences: {
         nodeIntegration: false,
       },
     };
 
+
     mainWindow = new BrowserWindow(windowOptions);
 
     mainWindowState.manage(mainWindow);
 
     // and load the index.html of the app.
-    mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
+    console.log('extension return ->', mainWindow.loadURL(path.join('file://', __dirname, '/index.html')));
+
+    // Load Extensions
+
+    installExtension('hhinaapppaileiechjoiifaancjggfjm')
+      .then(name => console.log(`Added Extension:  ${name}`))
+      .catch(err => console.log('An error occurred: ', err));
 
     // Launch fullscreen with DevTools open, usage: npm run debug
     if (debug) {

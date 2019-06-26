@@ -62,6 +62,7 @@
   },
   "dependencies": {
     "devtron": "^1.4.0",
+    "electron-devtools-installer": "2.2.4",
     "electron-dl": "1.14.0",
     "electron-window-state": "5.0.3",
     "glob": "^7.1.3",
