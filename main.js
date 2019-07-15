@@ -122,8 +122,57 @@ function registerGlobalShortcuts() {
   });
 }
 
+function getWebViewBounds() {
+  // Platforms
+  //
+  // 'aix'
+  // 'darwin'
+  // 'freebsd'
+  // 'linux'
+  // 'openbsd'
+  // 'sunos'
+  // 'win32'
+
+  // TODO: This is a quick fix, need to find a more elegant way to do this.
+  //    Possible solution: https://electronjs.org/docs/api/browser-window#winsetautohidemenubarhide
+  //
+  const contentBounds = mainWindow.getContentBounds();
+  // const menuBarHeight = 25;
+
+  // Set defaults
+  const bounds = {
+    x: 0,
+    y: 0,
+    width: contentBounds.width,
+    height: contentBounds.height,
+  };
+
+  // Supported Platform specific bounds
+  // switch (process.platform) {
+  //   case 'darwin':
+  //     // Do nothing
+  //     break;
+  //   case 'linux':
+  //     // bounds.y = menuBarHeight;
+  //     // bounds.height -= menuBarHeight;
+  //     break;
+  //   case 'win32':
+  //     // bounds.y = menuBarHeight;
+  //     // bounds.height -= menuBarHeight;
+  //     break;
+  //   default:
+  //     break;
+  // }
+
+  if (debug) {
+    bounds.width = Math.round(contentBounds.width * 0.7);
+  }
+
+  return bounds;
+}
+
 function createBrowserView() {
-  const mainWindowBounds = mainWindow.getBounds();
+  const bounds = getWebViewBounds();
 
   pandoraView = new BrowserView({
     webPreferences: {
@@ -134,14 +183,7 @@ function createBrowserView() {
 
   mainWindow.setBrowserView(pandoraView);
 
-  const desiredWidth = debug ? Math.round(mainWindowBounds.width * 0.7) : mainWindowBounds.width;
-
-  pandoraView.setBounds({
-    x: 0,
-    y: 0,
-    width: desiredWidth,
-    height: mainWindowBounds.height,
-  });
+  pandoraView.setBounds(bounds);
 
   pandoraView.setAutoResize({
     width: true,
@@ -256,7 +298,6 @@ function createDefaultMenu() {
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 }
-
 function initialize() {
   makeSingleInstance();
 
@@ -273,6 +314,7 @@ function initialize() {
       width: mainWindowState.width,
       height: mainWindowState.height,
       titleBarStyle: 'hidden',
+      autoHideMenuBar: true,
       title: app.getName(),
       webPreferences: {
         nodeIntegration: false,
