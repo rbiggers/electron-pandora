@@ -1,6 +1,6 @@
 {
   "name": "Pandora",
-  "version": "v0.2.3",
+  "version": "v0.2.4",
   "description": "Multi-platform desktop version of Pandora Music",
   "main": "main.js",
   "scripts": {
@@ -26,6 +26,7 @@
     },
     "linux": {
       "maintainer": "russell.biggers@gmail.com",
+      "category": "public.app-category.audio",
       "target": [
         "AppImage",
         "deb"
