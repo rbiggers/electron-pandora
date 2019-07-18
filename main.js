@@ -195,6 +195,7 @@ function createBrowserView() {
   if (debug) pandoraView.webContents.openDevTools({ mode: 'right' });
 }
 
+
 function createDefaultMenu() {
   if (Menu.getApplicationMenu()) return;
 
